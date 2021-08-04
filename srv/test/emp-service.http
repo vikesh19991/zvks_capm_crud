@@ -1,0 +1,173 @@
+#-------------------------------------------------------------
+# Service Home
+#-------------------------------------------------------------
+### Positive: Service Catalog
+GET http://localhost:4004/EmployeeSRV
+
+### Positive: Service Metadata
+GET http://localhost:4004/EmployeeSRV/$metadata
+
+#-------------------------------------------------------------
+# EmployeeSet_ReadAll
+#-------------------------------------------------------------
+### Positive: Get Single Employee
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadAll/02BD2137-0890-1EEA-A6C2-BB55C197A7FB
+
+### Positive: Top 11 Employees Skipping 1
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadAll?$top=11&$skip=1
+
+### Positive: Get with $filter
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadAll?$filter=BANK_ID eq '99999888'
+
+#-------------------------------------------------------------
+# EmployeeSet_ReadExcludingSalary
+#-------------------------------------------------------------
+### Positive: Top 11 Employees
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadExcludingSalary?$top=11
+
+#-------------------------------------------------------------
+# EmployeeSet_ReadIDName
+#-------------------------------------------------------------
+### Positive: Get Single Employee
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadIDName/02BD2137-0890-1EEA-A6C2-BB55C197A7FB
+
+### Positive: Top 11 Employees
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadIDName?$top=11
+
+#-------------------------------------------------------------
+# EmployeeSet_InsertOnly
+#-------------------------------------------------------------
+### Negative: Top 11 Employees
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_InsertOnly?$top=11
+
+### Positive: Post New Employee
+POST http://localhost:4004/EmployeeSRV/EmployeeSet_InsertOnly
+Content-Type: application/json
+
+{
+  //"ID": System Generated
+  "NAME_FIRST": "Vikesh",
+  "NAME_MIDDLE": "Kumar",
+  "NAME_LAST": "Sharma",
+  "NAME_INITIALS": "VKS",
+  "GENDER": "M",
+  "LANGUAGE": "E",
+  "PHONE_NUMBER": "+919999111222",
+  "EMAIL": "viola.gains@itelo.iinfo",
+  "LOGIN_NAME": "VSHARMA",
+  "CURRENCY_code": "INR",
+  "SALARY_AMOUNT": 10000,
+  "ACCOUNT_NUMBER": "999888777",
+  "BANK_ID": "102030405",
+  "BANK_NAME": "State Bank of India"
+}
+
+### Generated ID (Use Ctrl + D): 74261391-bf54-48c0-b4a2-6d331cf8316c
+### Read Single Employee Which was just created
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadAll/7eefc311-95db-40d9-b494-7dcd6647d0e6
+
+### Negative: Post New Employee
+POST http://localhost:4004/EmployeeSRV/EmployeeSet_InsertOnly
+Content-Type: application/json
+
+{
+  //"ID": System Generated
+  //"NAME_FIRST": "Vikesh",             @mandatory
+  "NAME_MIDDLE": "Kumar",
+  "NAME_LAST": "Sharma",
+  "NAME_INITIALS": "VKS",
+  //"GENDER": "M",                      @mandatory
+  "LANGUAGE": "E",
+  "PHONE_NUMBER": "+919999111222",
+  "EMAIL": "viola.gains@itelo.info",
+  "LOGIN_NAME": "VSHARMA",
+  "CURRENCY_code": "INR",
+  "SALARY_AMOUNT": 10000,
+  "ACCOUNT_NUMBER": "999888777",
+  "BANK_ID": "102030405",
+  "BANK_NAME": "State Bank of India"
+}
+
+#-------------------------------------------------------------
+# EmployeeSet_UpdateOnly
+#-------------------------------------------------------------
+
+### Negative: Put(Patch) Salary of Employee which was just created
+PATCH http://localhost:4004/EmployeeSRV/EmployeeSet_UpdateOnly/02BD2137-0890-1EEA-A6C2-BB55C197A7FB
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+            "SALARY_AMOUNT": "10000000.01",
+            "CURRENCY_code": "INR"
+}
+
+### Positive: Put(Patch) Salary of Employee which was just created
+PATCH http://localhost:4004/EmployeeSRV/EmployeeSet_UpdateOnly/02BD2137-0890-1EEA-A6C2-BB55C197A7FB
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+            "SALARY_AMOUNT": "10000000.00", 
+            "CURRENCY_code": "INR"
+}
+
+### Positive: Check the update
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadAll/02BD2137-0890-1EEA-A6C2-BB55C197A7FB
+
+#-------------------------------------------------------------
+# EmployeeSet_DeleteOnly
+#-------------------------------------------------------------
+### Negative: Deletion restricted by Event Handler
+DELETE http://localhost:4004/EmployeeSRV/EmployeeSet_DeleteOnly/fb075ae6-ee5a-48d2-bea1-34cf911a6bb7
+
+#-------------------------------------------------------------
+# Auhtorization
+#-------------------------------------------------------------
+###
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_ReadAll
+Authorization: Basic username:password
+
+#-------------------------------------------------------------
+# Authentication
+#-------------------------------------------------------------
+### Local Test with Mock Strategy -> Will Succeed
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_Authorized
+Authorization: Basic vikesh:1234
+
+### Success
+PATCH http://localhost:4004/EmployeeSRV/EmployeeSet_Authorized/02BD2137-0890-1EEA-A6C2-BB55C197A7FB
+Content-Type: application/json;IEEE754Compatible=true
+Authorization: Basic vikesh:1234
+
+{
+            "SALARY_AMOUNT": "10000000.00", 
+            "CURRENCY_code": "INR"
+}
+
+### Fail
+PATCH http://localhost:4004/EmployeeSRV/EmployeeSet_Authorized/02BD2137-0890-1EEA-A6C2-BB55C197A7FB
+Content-Type: application/json;IEEE754Compatible=true
+Authorization: Basic vishesh:
+
+{
+            "SALARY_AMOUNT": "10000000.00", 
+            "CURRENCY_code": "INR"
+}
+
+### Local Test with Mock Strategy -> Will Succeed
+GET http://localhost:4004/EmployeeSRV/EmployeeSet_Authorized
+Authorization: Basic vishesh:
+
+#-------------------------------------------------------------
+# OData V2
+#-------------------------------------------------------------
+###
+GET http://localhost:4004/v2/EmployeeSRV
+Authorization: Basic username:password
+
+### Positive: Service Metadata
+GET http://localhost:4004/v2/EmployeeSRV/$metadata
+Authorization: Basic username:password
+
+###
+GET http://localhost:4004/v2/EmployeeSRV/EmployeeSet_ReadAll(02BD2137-0890-1EEA-A6C2-BB55C197A7FB)
+Authorization: Basic username:password
