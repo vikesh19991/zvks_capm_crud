@@ -1,7 +1,7 @@
 # Introduction
 Employee Applicaiton to demonstrate the use of CDS-DK to write NodeJS code
-- Data Model (Entity, Aspects, Annotations, localization, in memory, local database)
-- Service (Entity, Annotations, localizaiton, Handler, CRUD using CQL)
+- Data Model (Entity, Aspects, Annotations, Localization, In-Memory, Local Database)
+- Service (Entity, Annotations, Localizaiton, Service Handler implementing CRUD using CQL)
 - V4 to V2 Adapter 
 - Mock Authentication
 
