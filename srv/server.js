@@ -5,4 +5,4 @@ cds.on("bootstrap", (app) => {
   app.use(v2Proxy());
 });
 
-module.exports = cds.server;
+module.exports = cds.server; 

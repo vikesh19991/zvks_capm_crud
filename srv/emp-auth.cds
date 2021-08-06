@@ -1,6 +1,7 @@
 using { zvks.srv.emp_service.EmployeeSRV } from './emp-service';
 
-@requires : 'authenticated-user'
+// Any User ID nad Password will authenticate, even blank
+@requires : 'authenticated-user'  
 annotate EmployeeSRV with {};
 
 @restrict : [

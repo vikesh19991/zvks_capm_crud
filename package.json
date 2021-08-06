@@ -60,26 +60,12 @@
           "users": {
             "vikesh": {
               "password": "1234",
-              "roles": [
-                "Admin",
-                "Viewer"
-              ],
-              "userAttributes": {
-                "BankName": [
-                  "$UNRESTRICTED"
-                ]
-              }
+              "roles": ["Admin","Viewer"],
+              "userAttributes": {"BankName": ["$UNRESTRICTED"]}
             },
             "vishesh": {
-              "roles": [
-                "Viewer"
-              ],
-              "userAttributes": {
-                "BankName": [
-                  "My Bank of London",
-                  "My Bank of New York"
-                ]
-              }
+              "roles": ["Viewer"],
+              "userAttributes": {"BankName": ["My Bank of London","My Bank of New York"]}
             }
           }
         }
