@@ -2,7 +2,7 @@
 Employee Applicaiton to demonstrate the use of CDS-DK to write NodeJS code
 - Data Model (Entity, Aspects, Annotations, Localization, In-Memory, Local Database)
 - Service (Entity, Annotations, Localizaiton, Service Handler implementing CRUD using CQL)
-- V4 to V2 Adapter 
+- V4 to V2 Adapter (https://www.npmjs.com/package/@sap/cds-odata-v2-adapter-proxy?activeTab=readme)
 - Mock Authentication
 
 # Getting Started
