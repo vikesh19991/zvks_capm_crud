@@ -3,6 +3,7 @@ namespace zvks.srv.emp_annot;
 using {zvks.srv.emp_service} from './emp-service';
 
 @path : '/EmployeeSRV'
+//@requires : 'authenticated-user'
 annotate emp_service.EmployeeSRV with {};
 
 @Capabilities : {
